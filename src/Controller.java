@@ -1,7 +1,15 @@
+
+
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader; 
+import javafx.scene.Parent;   
+import javafx.scene.Scene;
+
 public class Controller {
 
     @FXML
@@ -10,20 +18,35 @@ public class Controller {
     @FXML
     private Button joinSessionButton;
 
+
     @FXML
     void onHSBtnClick(ActionEvent event) {
-
+        
     }
-private Stage mainWindow; // Define mainWindow as a variable of type Stage
-
+    private Stage mainWindow;
     public void setMainWindow(Stage mainWindow) {
         this.mainWindow = mainWindow;
     }
 
     @FXML
     void onJSBtnClick(ActionEvent event) {
-        // Example code just to check it works
-mainWindow.setTitle("Changed name example");
+        try {
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ipSelection.fxml"));
+            Parent ipSelectionRoot = loader.load();
+
+            // Create a new Scene with the loaded FXML
+            
+            Scene ipSelectionScene = new Scene(ipSelectionRoot, 700, 700);
+
+            // Display the new Scene
+            mainWindow.setScene(ipSelectionScene);
+            mainWindow.setTitle("Join Session"); // Update the title
+
+        } catch (IOException e) {
+            System.err.println("Error loading ipSelection.fxml:");
+            e.printStackTrace();
+        }
     }
 
 }

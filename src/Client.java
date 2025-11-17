@@ -2,7 +2,6 @@ import java.io.*;
 import java.net.*;
 
 public class Client {
-    private static final int SHIFT = 3;
 
     public static void main(String[] args) {
         if (args.length < 2) {
@@ -21,6 +20,16 @@ public class Client {
         ) {
             System.out.println("✅ Connected to server at " + host + ":" + port);
 
+            String keyString = in.readLine();
+            if (keyString == null) {
+                System.err.println("❌ Did not receive key from server. Disconnecting.");
+                return;
+            }
+
+    
+            SubstitutionCipher myCipher = new SubstitutionCipher(keyString);
+            System.out.println("Key received and cipher initialized.");
+
             new Thread(() -> {
                 String incoming;
                 try {
@@ -34,7 +43,7 @@ public class Client {
 
             String userMsg;
             while ((userMsg = userIn.readLine()) != null) {
-                String encrypted = CaesarCipher.encrypt(userMsg, SHIFT);
+                String encrypted = myCipher.encrypt(userMsg);
                 out.println(encrypted);
                 if (userMsg.equalsIgnoreCase("exit")) break;
             }
