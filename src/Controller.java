@@ -21,7 +21,7 @@ public class Controller {
 
     @FXML
     void onHSBtnClick(ActionEvent event) {
-        
+        Server.start();
     }
     private Stage mainWindow;
     public void setMainWindow(Stage mainWindow) {
@@ -36,7 +36,7 @@ public class Controller {
             Parent ipSelectionRoot = loader.load();
 
             // Create a new Scene with the loaded FXML
-            
+            System.out.println("Server started. Waiting for two clients...");
             Scene ipSelectionScene = new Scene(ipSelectionRoot, 700, 700);
 
             // Display the new Scene

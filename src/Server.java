@@ -4,35 +4,43 @@ import java.net.*;
 public class Server {
     private static final int PORT = 1234;
 
-    public static void main(String[] args) throws IOException {
-        System.out.println("Server started. Waiting for two clients...");
-        
-        final SubstitutionCipher cipher = new SubstitutionCipher();
-        
-        // Get the key as a String to be distributed
-        String keyString = cipher.getKeyString();
-        try (ServerSocket serverSocket = new ServerSocket(PORT)) { // Added try brackets
-            Socket client1 = serverSocket.accept();
+    public static void start() { 
+        new Thread(() -> { 
+            try {
+                System.out.println("Server started. Waiting for two clients...");
+
+                final SubstitutionCipher cipher = new SubstitutionCipher();
+                String keyString = cipher.getKeyString();
+
+                try (ServerSocket serverSocket = new ServerSocket(PORT)) {
+                    
+                    
+                    Socket client1 = serverSocket.accept(); 
+                    
+                    System.out.println("Client 1 connected.");
+                    PrintWriter out1 = new PrintWriter(client1.getOutputStream(), true);
+                    BufferedReader in1 = new BufferedReader(new InputStreamReader(client1.getInputStream()));
+                    out1.println(keyString);
+                    out1.println("Connected to chatroom. Waiting for another user...");
+
+                    Socket client2 = serverSocket.accept();
+                    System.out.println("Client 2 connected.");
+                    PrintWriter out2 = new PrintWriter(client2.getOutputStream(), true);
+                    BufferedReader in2 = new BufferedReader(new InputStreamReader(client2.getInputStream()));
+                    out2.println(keyString);
+                    out2.println("Connected to chatroom.");
+
+                    out1.println(" Chat started! Type 'exit' to leave.");
+                    out2.println(" Chat started! Type 'exit' to leave.");
+
             
-            System.out.println("Client 1 connected.");
-            PrintWriter out1 = new PrintWriter(client1.getOutputStream(), true);
-            BufferedReader in1 = new BufferedReader(new InputStreamReader(client1.getInputStream()));
-            out1.println(keyString);
-            out1.println("Connected to chatroom. Waiting for another user...");
-
-            Socket client2 = serverSocket.accept();
-            System.out.println("Client 2 connected.");
-            PrintWriter out2 = new PrintWriter(client2.getOutputStream(), true);
-            BufferedReader in2 = new BufferedReader(new InputStreamReader(client2.getInputStream()));
-            out2.println(keyString); // Sends key to client
-            out2.println("Connected to chatroom.");
-
-            out1.println(" Chat started! Type 'exit' to leave.");
-            out2.println(" Chat started! Type 'exit' to leave.");
-
-            new Thread(() -> handleClient("Client 1", in1, out2, cipher)).start();
-            new Thread(() -> handleClient("Client 2", in2, out1, cipher)).start();
-        }
+                    new Thread(() -> handleClient("Client 1", in1, out2, cipher)).start();
+                    new Thread(() -> handleClient("Client 2", in2, out1, cipher)).start();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     private static void handleClient(String clientName, BufferedReader in, PrintWriter outOther, SubstitutionCipher cipher) {
