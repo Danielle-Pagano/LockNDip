@@ -1,6 +1,10 @@
 import java.util.*;
 import java.util.stream.Collectors;
 
+private char generateIV() {
+    Random rand = new Random();
+    return chars.get(rand.nextInt(chars.size()));
+}
 
 public class SubstitutionCipher {
     private List<Character> chars;
@@ -56,26 +60,39 @@ public SubstitutionCipher(String keyString) {
 
 
     public String encrypt(String text) {
+
+        char iv = generateIV();
+        int shift = chars.indexOf(iv);
         
         StringBuilder result = new StringBuilder();
+        result.append(iv);
         for (char c : text.toCharArray()) {
                 int index = this.chars.indexOf(c);
                 if (index == -1){ // If string isn't part of key, append as is
                     result.append(c);
                 } else{
-                result.append(this.key.get(index));
+                int shiftedIndex = (index + shift) % key.size();
+                result.append(key.get(shiftedIndex));
         }}
         return result.toString();
     }
+    
     public String decrypt(String text) {
+
+        char iv = text.charAt(0);
+        int shift = chars.indexOf(iv);
+
+        String actualCipher = text.substring(1);
+        
         StringBuilder result = new StringBuilder();
-        for (char c : text.toCharArray()) {
+        for (char c : actualCipher.toCharArray()) {
             int index = this.key.indexOf(c); 
             
             if (index == -1) {
                 result.append(c);
             } else {
-                result.append(this.chars.get(index)); 
+                int shiftedIndex = (index - shift + key.size()) % key.size();
+                result.append(chars.get(shiftedIndex));
             }
         }
         return result.toString();
