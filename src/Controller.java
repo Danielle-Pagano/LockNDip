@@ -51,7 +51,7 @@ public class Controller {
 
     void openChatScreen(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("chat.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("lockndip_chatroom.fxml"));
             Parent chatRoot = loader.load();
 
             Scene chatScene = new Scene(chatRoot, 1159, 768);
