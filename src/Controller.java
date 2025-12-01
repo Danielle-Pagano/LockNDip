@@ -49,4 +49,20 @@ public class Controller {
         }
     }
 
+    void openChatScreen(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("chat.fxml"));
+            Parent chatRoot = loader.load();
+
+            Scene chatScene = new Scene(chatRoot, 1159, 768);
+
+            mainWindow.setScene(chatScene);
+            mainWindow.setTitle("Chat");
+
+        } catch (IOException e) {
+            System.err.println("Error loading chat.fxml:");
+            e.printStackTrace();
+        }
+    }
+
 }
