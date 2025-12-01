@@ -41,7 +41,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="640.0"
+      xmlns="http://javafx.com/javafx/25"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="IpSelectionController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -84,6 +87,11 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
+            <Button layoutX="20.0" layoutY="20.0"
+               mnemonicParsing="false"
+               text="Back"
+                fx:id="backButton"
+               onAction="#onBackBtnClick" />
             <TextField promptText="Name" layoutX="155.0" layoutY="115.0" prefHeight="23.0" prefWidth="145.0" />
             <TextField promptText="IP Address" layoutX="155.0" layoutY="213.0" prefHeight="23.0" prefWidth="145.0" />
             <Text layoutX="155.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP Address  You  Want to Connect To:" />
