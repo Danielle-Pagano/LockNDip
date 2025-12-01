@@ -15,20 +15,23 @@ public class IpSelectionController {
 
     @FXML
     private void onBackBtnClick(ActionEvent event) throws IOException {
-        // Load the start screen again
+        System.out.println("Back button clicked!");
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("startScreen.fxml"));
         Parent root = loader.load();
 
-        // Get current window
         Stage stage = (Stage) backButton.getScene().getWindow();
 
-        // Reattach the original controller so its buttons still work
         Controller controller = loader.getController();
         controller.setMainWindow(stage);
 
-        // Switch back to start screen
         stage.setScene(new Scene(root, 700, 700));
         stage.setTitle("Lock N Dip");
         stage.show();
+    }
+
+    @FXML
+    private void initialize() {
+        System.out.println("IpSelectionController initialized");
     }
 }
