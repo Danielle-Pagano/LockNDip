@@ -1,7 +1,11 @@
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+/*private char generateIV() {
+    Random rand = new Random();
+    return chars.get(rand.nextInt(chars.size()));
+}
+*/
 public class SubstitutionCipher {
     private List<Character> chars;
     private List<Character> key;
@@ -56,8 +60,12 @@ public SubstitutionCipher(String keyString) {
 
 
     public String encrypt(String text) {
-        
+        /*
+        char iv = generateIV();
+        int shift = chars.indexOf(iv);
+        */
         StringBuilder result = new StringBuilder();
+        //result.append(iv);
         for (char c : text.toCharArray()) {
                 int index = this.chars.indexOf(c);
                 if (index == -1){ // If string isn't part of key, append as is
@@ -68,6 +76,11 @@ public SubstitutionCipher(String keyString) {
         return result.toString();
     }
     public String decrypt(String text) {
+
+        /*
+        char iv = text.charAt(0);
+        int shift = chars.indexOf(iv);
+        */
         StringBuilder result = new StringBuilder();
         for (char c : text.toCharArray()) {
             int index = this.key.indexOf(c); 
